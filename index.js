@@ -1,10 +1,18 @@
-function generateParenthesis(n) {
-  const result = [];
-  backtrack("", 0, 0);
-  return result;
-  function backtrack(current, open, close) {
-    if (current.length === 2 * n) result.push(current);
-    if (open < n) backtrack(current + "(", open + 1, close);
-    if (close < open) backtrack(current + ")", open, close + 1);
+const binarySearchRecursive = (
+  arr,
+  target,
+  left = 0,
+  right = arr.length - 1,
+) => {
+  if (left > right) {
+    return -1;
   }
-}
+  const mid = Math.floor((left + right) / 2);
+  if (arr[mid] === target) {
+    return mid;
+  } else if (arr[mid] < target) {
+    return binarySearchRecursive(arr, target, mid + 1, right);
+  } else {
+    return binarySearchRecursive(arr, target, left, mid - 1);
+  }
+};
