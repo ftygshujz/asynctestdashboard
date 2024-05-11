@@ -1,18 +1,22 @@
-const binarySearchRecursive = (
-  arr,
-  target,
-  left = 0,
-  right = arr.length - 1,
-) => {
-  if (left > right) {
-    return -1;
+function permuteUnique(nums) {
+  nums.sort((a, b) => a - b);
+  const result = [];
+  const used = new Array(nums.length).fill(false);
+  backtrack([]);
+  return result;
+  function backtrack(permutation) {
+    if (permutation.length === nums.length) {
+      result.push([...permutation]);
+      return;
+    }
+    for (let i = 0; i < nums.length; i++) {
+      if (used[i] || (i > 0 && nums[i] === nums[i - 1] && !used[i - 1]))
+        continue;
+      used[i] = true;
+      permutation.push(nums[i]);
+      backtrack(permutation);
+      permutation.pop();
+      used[i] = false;
+    }
   }
-  const mid = Math.floor((left + right) / 2);
-  if (arr[mid] === target) {
-    return mid;
-  } else if (arr[mid] < target) {
-    return binarySearchRecursive(arr, target, mid + 1, right);
-  } else {
-    return binarySearchRecursive(arr, target, left, mid - 1);
-  }
-};
+}
