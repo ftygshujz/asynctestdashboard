@@ -1,22 +1,26 @@
-function permuteUnique(nums) {
-  nums.sort((a, b) => a - b);
+function letterCombinations(digits) {
+  if (digits.length === 0) return [];
+  const map = {
+    2: "abc",
+    3: "def",
+    4: "ghi",
+    5: "jkl",
+    6: "mno",
+    7: "pqrs",
+    8: "tuv",
+    9: "wxyz",
+  };
   const result = [];
-  const used = new Array(nums.length).fill(false);
-  backtrack([]);
+  backtrack("", 0);
   return result;
-  function backtrack(permutation) {
-    if (permutation.length === nums.length) {
-      result.push([...permutation]);
+  function backtrack(current, index) {
+    if (current.length === digits.length) {
+      result.push(current);
       return;
     }
-    for (let i = 0; i < nums.length; i++) {
-      if (used[i] || (i > 0 && nums[i] === nums[i - 1] && !used[i - 1]))
-        continue;
-      used[i] = true;
-      permutation.push(nums[i]);
-      backtrack(permutation);
-      permutation.pop();
-      used[i] = false;
+    const letters = map[digits[index]];
+    for (const letter of letters) {
+      backtrack(current + letter, index + 1);
     }
   }
 }
